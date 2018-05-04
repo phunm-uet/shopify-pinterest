@@ -43,6 +43,7 @@ class SyncProduct extends Command
         $collections = Collection::all()->toArray();
         foreach($collections as $collection){
             $this->info('Loading Product in Collection '. $collection['collection_title']);
+            // dd($collection['collection_id']);
             $products = $this->getProductByCollection($collection['collection_id']);
             foreach($products as $product){
                 $tmp = new Product();
@@ -62,7 +63,7 @@ class SyncProduct extends Command
 
     public function getProductByCollection($collectionId){
         $products = [];
-        $limit = 500;
+        $limit = 250;
         $shopifyURL = env('SHOPIFY_URL');
         $shopifyAPIKey = env('SHOPIFY_API_KEY');
         $shopifyAPISecret = env('SHOPIFY_API_SECRET');
