@@ -32,8 +32,7 @@ class Kernel extends ConsoleKernel
         if(count($collection) > 0){
             $collectionId = $collection->collection_id;
             $schedule->command("push:pin $collectionId")
-                     ->everyMinute()
-                     ->appendOutputTo('output.log');
+                     ->everyMinute();
             $collection->next_time = Carbon::now()->addSecond($collection->timeout);
             $collection->save();
         }
