@@ -49,11 +49,14 @@ class PushPin extends Command
         $username = env('PINTEREST_USERNAME');
         $password = env('PINTEREST_PASSWORD');
         $boardId = env('PINTEREST_BOARD');
-        $result = $bot->auth->login($username, $password);
-        if(!$result){
-            echo $bot->getLastError();
-            die;
-        }   
+        if (!$bot->auth->isLoggedIn()) {
+            $result = $bot->auth->login($username, $password);
+            if(!$result){
+                echo $bot->getLastError();
+                die;
+            }            
+        }
+        
         $pinInfo = $bot->pins->create($product->product_image, $boardId, $product->product_title,$product->product_link);
         if(!isset($pinInfo['id'])){
             DB::table('logs')->insert([

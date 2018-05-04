@@ -50,7 +50,7 @@ class SyncProduct extends Command
                 $tmp->product_id = $product['id'];
                 $tmp->product_title = $product['title'];
                 $tmp->product_image = $product['image']['src'];
-                $tmp->product_link = env('SHOPIFY_URL')."/products/".$product['handle'];
+                $tmp->product_link = env('SHOPIFY_REAL_URL')."/products/".$product['handle'];
                 $tmp->collection_id = $collection['collection_id'];
                 if($tmp->save()){
                     $this->info("Save success : " . $product['id']);
