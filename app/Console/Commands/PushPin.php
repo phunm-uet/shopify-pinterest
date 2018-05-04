@@ -7,6 +7,7 @@ use App\Product;
 use App\History;
 use seregazhuk\PinterestBot\Factories\PinterestBot;
 use Carbon\Carbon;
+use DB;
 class PushPin extends Command
 {
     /**
@@ -48,16 +49,16 @@ class PushPin extends Command
         $username = env('PINTEREST_USERNAME');
         $password = env('PINTEREST_PASSWORD');
         $boardId = env('PINTEREST_BOARD');
-        if (!$bot->auth->isLoggedIn()) {
-            $result = $bot->auth->login($username, $password);
-            if(!$result){
-                echo $bot->getLastError();
-                die;
-            }            
-        }
+        $result = $bot->auth->login($username, $password);
+        if(!$result){
+            echo $bot->getLastError();
+            die;
+        }   
         $pinInfo = $bot->pins->create($product->product_image, $boardId, $product->product_title,$product->product_link);
         if(!isset($pinInfo['id'])){
-            echo $bot->getLastError();
+            DB::table('logs')->insert([
+                'message' => $bot->getLastError()
+            ]);
             die;
         }
         $pinLink = $pinInfo['id'];
@@ -69,6 +70,8 @@ class PushPin extends Command
         // Update status product
         $product->is_publish = 1;
         $product->save();
-        echo Carbon::now(). " Push Success: ". $product->product_id .PHP_EOL;
+        DB::table('logs')->insert([
+            'message' => " Push Success: ". $product->product_id
+        ]);
     }
 }
