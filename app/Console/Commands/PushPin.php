@@ -56,7 +56,7 @@ class PushPin extends Command
                 die;
             }            
         }
-        
+        if($product == null) die;
         $pinInfo = $bot->pins->create($product->product_image, $boardId, $product->product_title,$product->product_link);
         if(!isset($pinInfo['id'])){
             DB::table('logs')->insert([
