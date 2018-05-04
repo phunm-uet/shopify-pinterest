@@ -13,6 +13,8 @@
 
 Route::get('/','HomeController@index')->name('home');
 Route::get('/history','HistoryController@index')->name('history');
+Route::get('/change-password','HomeController@changePassword')->name('change-password');
+Route::post('/post-change-password','HomeController@postChangePassword')->name('post-change-password');
 
 Auth::routes();
 

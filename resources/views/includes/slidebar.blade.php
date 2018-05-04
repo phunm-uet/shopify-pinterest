@@ -15,6 +15,11 @@
                     <i class="fa fa-user fa-lg"></i> History
                   </a>
                   </li>
+                  <li class="{{Request::route()->getName() == 'change-password' ? 'active' : '' }}">
+                    <a href="{{route('change-password')}}">
+                      <i class="fa fa-user fa-lg"></i> Chage Password
+                    </a>
+                    </li>
             </ul>
      </div>
 </div>

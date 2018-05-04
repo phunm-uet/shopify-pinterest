@@ -61,7 +61,7 @@
                                     <label for="">Timeout(s)</label>
                                     <input type="hidden" id="collection_id_modal">
                                     <input type="hidden" id="status">
-                                    <input type="number" class="form-control" id="timeout-setting" placeholder="60" required="required">
+                                <input type="number" class="form-control" id="timeout-setting" placeholder="60" required="required">
                                 </div>
                                 <button type="button" class="btn btn-primary btn-block" id="save-config">Save Config</button>
                             </div>
