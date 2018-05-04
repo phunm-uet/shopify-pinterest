@@ -29,12 +29,14 @@ class Kernel extends ConsoleKernel
         $collection = Collection::where('status',1)
                                 ->whereDate('next_time','<=', Carbon::now())
                                 ->inRandomOrder()->first();
-        $collectionId = $collection->collection_id;
-        $schedule->command("push:pin $collectionId")
-                 ->everyMinute()
-                 ->appendOutputTo('output.log');
-        $collection->next_time = Carbon::now()->addSecond($collection->timeout);
-        $collection->save();
+        if(count($collection) > 0){
+            $collectionId = $collection->collection_id;
+            $schedule->command("push:pin $collectionId")
+                     ->everyMinute()
+                     ->appendOutputTo('output.log');
+            $collection->next_time = Carbon::now()->addSecond($collection->timeout);
+            $collection->save();
+        }
     }
 
     /**
