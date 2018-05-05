@@ -49,10 +49,11 @@ class PushPin extends Command
         // Get token for excute
         $boardId = env('PINTEREST_BOARD');
 
-        $account = DB::table('accounts')->where('limit_remaining','>',0)
-                                        ->orWhereDate('exp_time','<',Carbon::now())
+        $account = DB::table('accounts')->where('limit_remaining', 0)
+                                        ->where('exp_time', '<=', Carbon::now())
+                                        ->orWhere('limit_remaining','>',0)
                                         ->first();
-        if($product == null || $account == null) die;
+        if($product == null || $account == null) dd(1);
         $pinterest = new Pinterest(null, null);
         $pinterest->auth->setOAuthToken($account->token);
         // die;
