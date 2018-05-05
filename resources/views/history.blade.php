@@ -18,7 +18,7 @@
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$history->product_id}}</td>
-                                <td><a href="{{$history->product_link}}" target="_blank">{{$history->product_title}}</a></td>
+                                <td><a href="{{$history->product_link}}" target="_blank">{{str_limit($history->product_title,100,'...')}}</a></td>
                                 <td>{{$history->collection_id}}</a></td>
                                 <td>{{$history->created_at}}</a></td>
                             </tr>
