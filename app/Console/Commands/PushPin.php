@@ -98,7 +98,7 @@ class PushPin extends Command
                                 ]);
             }
             DB::table('logs')->insert([
-                'message' => $e->getCode()
+                'message' => $e->getMessage()
             ]);
         }
     }
