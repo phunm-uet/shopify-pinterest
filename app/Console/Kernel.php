@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $collection = Collection::where('status',1)
-                                ->whereDate('next_time','<=', Carbon::now())
+                                ->where('next_time','<=', Carbon::now())
                                 ->inRandomOrder()->first();
         if(count($collection) > 0){
             $collectionId = $collection->collection_id;
