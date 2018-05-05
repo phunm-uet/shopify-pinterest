@@ -19,7 +19,7 @@
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$history->product_id}}</td>
                                 <td><a href="{{$history->product_link}}" target="_blank">{{str_limit($history->product_title,50,'...')}}</a></td>
-                                <td><a href="{{'https://www.pinterest.com/pin/'.Upd$history->pinterest_id}}" target="_blank">Pinterest Link</a></td>
+                                <td><a href="{{'https://www.pinterest.com/pin/'.$history->pinterest_id}}" target="_blank">Pinterest Link</a></td>
                                 <td>{{$history->collection_id}}</a></td>
                                 <td>{{$history->created_at}}</a></td>
                             </tr>
