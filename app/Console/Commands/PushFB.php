@@ -7,6 +7,7 @@ use GuzzleHttp\Client;
 use App\Product;
 use App\History;
 use Carbon\Carbon;
+use DB;
 class PushFB extends Command
 {
     /**
