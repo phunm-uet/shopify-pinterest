@@ -41,7 +41,8 @@ class PushFB extends Command
     public function handle()
     {
         // Get product to push
-        $product = Product::where('is_fb_publish',0)
+        $collectionId = $this->argument('collectionId');
+        $product = Product::where('collection_id',$collectionId)
                             ->inRandomOrder()->first();
         $accessToken = env('FB_PAGE_TOKEN');
         if($product == null || $accessToken == null) die;
