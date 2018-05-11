@@ -37,8 +37,6 @@ class SyncCollection extends Command
      */
     public function handle()
     {
-        // truncate Collection table
-        Collection::truncate();
         $this->info('Getting collection From Shopify....');
         $shopifyURL = env('SHOPIFY_URL');
         $shopifyAPIKey = env('SHOPIFY_API_KEY');
@@ -56,16 +54,18 @@ class SyncCollection extends Command
         $collections = array_merge($customCollection,$smartCollection);
         foreach($collections as $collection){
             $this->info("Adding ".$collection['title']);
-            $tmp = new Collection;
-            $tmp->collection_id = $collection['id'];
-            $tmp->collection_title = $collection['title'];
-            $tmp->collection_link = env('SHOPIFY_URL')."/collections/".$collection['handle'];
-            if($tmp->save()){
-                $this->info('Save Success');
-            } else {
-                $this->error('Save Failed');
+            $tmpCollection = Collection::where('collection_id',$collection['id'])->first();
+            if($tmpCollection == null){
+                $tmp = new Collection;
+                $tmp->collection_id = $collection['id'];
+                $tmp->collection_title = $collection['title'];
+                $tmp->collection_link = env('SHOPIFY_URL')."/collections/".$collection['handle'];
+                if($tmp->save()){
+                    $this->info('Save Success');
+                } else {
+                    $this->error('Save Failed');
+                }
             }
-            
         }
     }
 }

@@ -39,29 +39,31 @@ class SyncProduct extends Command
      */
     public function handle()
     {
-        Product::truncate();
         $collections = Collection::all()->toArray();
         foreach($collections as $collection){
             $this->info('Loading Product in Collection '. $collection['collection_title']);
             // dd($collection['collection_id']);
             $products = $this->getProductByCollection($collection['collection_id']);
             foreach($products as $product){
-                $tmp = new Product();
-                $tmp->product_id = $product['id'];
-                $tmp->product_title = $product['title'];
-                $tmp->product_image = $product['image']['src'];
-                $tmp->product_link = env('SHOPIFY_REAL_URL')."/products/".$product['handle'];
-                $tmp->collection_id = $collection['collection_id'];
-                if($tmp->save()){
-                    $this->info("Save success : " . $product['id']);
-                }else {
-                    $this->error("Save fail : " . $product['id']);
+                $tmpProduct = Product::where('product_id',$product['id'])->first();
+                if($tmpProduct == null){
+                    $tmp = new Product();
+                    $tmp->product_id = $product['id'];
+                    $tmp->product_title = $product['title'];
+                    $tmp->product_image = $product['image']['src'];
+                    $tmp->product_link = env('SHOPIFY_REAL_URL')."/products/".$product['handle'];
+                    $tmp->collection_id = $collection['collection_id'];
+                    if($tmp->save()){
+                        $this->info("Save success : " . $product['id']);
+                    }else {
+                        $this->error("Save fail : " . $product['id']);
+                    }
                 }
             }
         }
     }
 
-    public function getProductByCollection($collectionId){
+    public function getProductByCollection($collectionId){      
         $products = [];
         $limit = 250;
         $shopifyURL = env('SHOPIFY_URL');
