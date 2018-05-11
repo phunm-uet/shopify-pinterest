@@ -8,6 +8,7 @@
         "php": ">=7.0.0",
         "dirkgroenen/Pinterest-API-PHP": "^0.2.11",
         "fideloper/proxy": "~3.3",
+        "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "phpclassic/php-shopify": "^1.0",
