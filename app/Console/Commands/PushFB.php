@@ -59,6 +59,11 @@ class PushFB extends Command
             $r = $client->request('POST', 'https://graph.facebook.com/v3.0/me/feed', ['form_params' => $body]);
             $body = json_decode($r->getBody(),true);
             $postId = $body['id'];
+            $product->is_publish = 1;
+            $product->save();
+            DB::table('logs')->insert([
+                'message' => " Push FB Success: ". $postId
+            ]);
         }catch(\Exception $e){
             DB::table('logs')->insert([
                 'message' => $e->getMessage()
